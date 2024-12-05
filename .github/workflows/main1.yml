@@ -2,7 +2,7 @@ name: 1- Building the workflow
 
 on:
  push:
- Workflow_dispatch:
+
 
 
 jobs:
