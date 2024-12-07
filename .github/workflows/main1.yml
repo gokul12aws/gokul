@@ -8,7 +8,7 @@ on:
 jobs:
   echo-hello-world:
     runs-on:
-      windows-lastest
+      ubuntu-lastest
     steps:
       - run: echo "hello-world"
   echo-good-bye:
