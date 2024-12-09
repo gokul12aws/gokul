@@ -5,7 +5,6 @@ run-name: ${{ github.actor }} is learing Github Actions
 
 on:
  push:
- workflow_dispatch:
 
 jobs:
   echo-print:
