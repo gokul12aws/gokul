@@ -1,18 +1,17 @@
-name: 1- Building the workflow
+name: workflow Events
 
-on:
- push:
-
- 
+on: 
+  push:
+    branches:
+      - 'feature/*'
+  
 
 jobs:
-  echo-hello-world:
-    runs-on:
-      ubuntu-latest
+  echo:
+    runs-on: ubuntu-latest
     steps:
-      - run: echo "hello-world"
-  echo-good-bye:
-    runs-on:
-      ubuntu-latest
-    steps:
-     - run: echo "good-bye"
+      - name: show the trigger
+        run:
+          echo "Event name: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "Branch: ${{ github.ref_name }}"
