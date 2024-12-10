@@ -1,22 +1,22 @@
 name: "Custom Triggers Workflow"
 on:
- # Use case 1: Trigger on push with a branch pattern
+ 
  push:
    branches:
      - 'feature/*' # Matches branches like 'feature/xyz'
      - 'release/**' # Matches branches like 'release/v1.0.0'
- # Use case 2: Trigger on specific event type
+
  issues:
    types:
      - opened # Trigger when an issue is opened
      - reopened # Trigger when an issue is reopened
- # Use case 3: Trigger on pull requests for multiple branches
+
  pull_request:
    branches:
      - 'main'
      - 'develop'
      - 'hotfix/*' # Matches branches like 'hotfix/fix-xyz'
- # Use case 4: Trigger on changes in specific paths
+
  push:
    paths:
      - 'src/**' # Any changes under the src directory
