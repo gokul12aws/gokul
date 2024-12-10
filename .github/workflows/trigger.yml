@@ -1,21 +1,27 @@
-name: Comprehensive GitHub Actions Workflow
+name: "Custom Triggers Workflow"
 on:
- # 1. Branch pattern for push
+ # Use case 1: Trigger on push with a branch pattern
  push:
-   # Trigger on push to main, develop, and feature branches
    branches:
-     - main
-     - develop
-     - 'feature/**'
- # 2. Event with specific type
+     - 'feature/*' # Matches branches like 'feature/xyz'
+     - 'release/**' # Matches branches like 'release/v1.0.0'
+ # Use case 2: Trigger on specific event type
  issues:
    types:
-     - opened
-     - reopened
-     - edited
- # 3. Multiple branches for pull request
+     - opened # Trigger when an issue is opened
+     - reopened # Trigger when an issue is reopened
+ # Use case 3: Trigger on pull requests for multiple branches
  pull_request:
    branches:
-     - main
-     - develop
-     - 'release/**'
+     - 'main'
+     - 'develop'
+     - 'hotfix/*' # Matches branches like 'hotfix/fix-xyz'
+
+jobs:
+ build:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout code
+       uses: actions/checkout@v3
+     - name: Display event details
+       run: echo "Triggered by ${{ github.event_name }} on branch ${{ github.ref_name }}"
