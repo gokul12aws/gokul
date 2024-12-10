@@ -1,18 +1,7 @@
 name: Comprehensive GitHub Actions Workflow
 on:
- # 2. Event with specific type
- issues:
-   types:
-     - opened
-     - reopened
-     - edited
- # 3. Multiple branches for pull request
- pull_request:
-   branches:
-     - main
-     - develop
-     - 'release/**'
- # 4. Run on specific path change
+ # 1. Branch pattern for push
+
  push:
    paths:
      - 'src/**'
