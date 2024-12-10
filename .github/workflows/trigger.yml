@@ -1,61 +1,58 @@
-name: "Custom Triggers Workflow"
-
+name: Comprehensive GitHub Actions Workflow
 on:
-
-  # Use case 1: Trigger on push with a branch pattern
-
-  push:
-
-    branches:
-
-      - 'feature/*' # Matches branches like 'feature/xyz'
-
-      - 'release/**' # Matches branches like 'release/v1.0.0'
-
-  # Use case 2: Trigger on specific event type
-
-  issues:
-
-    types:
-
-      - opened # Trigger when an issue is opened
-
-      - reopened # Trigger when an issue is reopened
-
-  # Use case 3: Trigger on pull requests for multiple branches
-
-  pull_request:
-
-    branches:
-
-      - 'main'
-
-      - 'develop'
-
-      - 'hotfix/*' # Matches branches like 'hotfix/fix-xyz'
-
-  # Use case 4: Trigger on changes in specific paths
-
-  push:
-
-    paths:
-
-      - 'src/**' # Any changes under the src directory
-
-      - 'docs/**' # Any changes under the docs directory
-
+ # 1. Branch pattern for push
+ push:
+   # Trigger on push to main, develop, and feature branches
+   branches:
+     - main
+     - develop
+     - 'feature/**'
+ # 2. Event with specific type
+ issues:
+   types:
+     - opened
+     - reopened
+     - edited
+ # 3. Multiple branches for pull request
+ pull_request:
+   branches:
+     - main
+     - develop
+     - 'release/**'
+ # 4. Run on specific path change
+ push:
+   paths:
+     - 'src/**'
+     - '!src/docs/**'
+     - 'package.json'
+     - 'README.md'
+ # Additional example: Workflow dispatch for manual triggering
+ workflow_dispatch:
+   inputs:
+     environment:
+       description: 'Environment to deploy'
+       required: false
+       default: 'staging'
 jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Checkout code
-
-        uses: actions/checkout@v3
-
-      - name: Display event details
-
-        run: echo "Triggered by ${{ github.event_name }} on branch ${{ github.ref_name }}" 
+ build-and-test:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout code
+       uses: actions/checkout@v4
+     - name: Set up Node.js
+       uses: actions/setup-node@v4
+       with:
+         node-version: '20'
+     - name: Install dependencies
+       run: npm ci
+     - name: Run tests
+       run: npm test
+ deploy:
+   needs: build-and-test
+   runs-on: ubuntu-latest
+   # Only run deploy on main branch or manual workflow dispatch
+   if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+   steps:
+     - name: Deploy to production
+       run: |
+         echo "Deploying to ${{ github.event.inputs.environment || 'production' }}"
