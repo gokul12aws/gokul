@@ -34,7 +34,7 @@ jobs:
 
     - name: Terraform Apply
       run: terraform apply -auto-approve tfplan
-    - name: Run Destroy Script
-      run: bash destory.sh 
+      
+  
       
       
