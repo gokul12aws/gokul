@@ -1,6 +1,6 @@
 name: terraform Deployment
 
-on:
+on: 
   push:
     branches:
       - main
