@@ -2,7 +2,7 @@ provider "aws" {
   region = "us-west-2"
 }
 
-resourse "aws_vpc" "gokul_vpc"{
+resource "aws_vpc" "gokul_vpc"{
   cidr_block = "10.0.0.0/16"
   enable_dns_support = true
   enable_dns_hostnames = true
@@ -31,11 +31,11 @@ resource "aws_subnet" "subnet_b" {
   }
 }
 
-resource "aws_internet_gateway" "igw"
+resource "aws_internet_gateway" "igw"{
   vpc_id = aws_vpc.gokul_vpc.id
 }
 
-resource "aws_route_table" "route_table"
+resource "aws_route_table" "route_table"{
   vpc_id = aws_vpc.gokul_vpc.id
 }
 
@@ -83,7 +83,7 @@ resource "aws_security_group" "allow_https" {
     to_port     = 443
     protocol    = "tcp" 
   }
-  
+}
   
   
   
