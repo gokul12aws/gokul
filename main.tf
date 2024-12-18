@@ -2,7 +2,7 @@ provider "aws" {
   region = "us-west-2"
 }
 
-resourse "aws_vpc" "main_vpc"{
+resourse "aws_vpc" "gokul_vpc"{
   cidr_block = "10.0.0.0/16"
   enable_dns_support = true
   enable_dns_hostnames = true
@@ -12,7 +12,7 @@ resourse "aws_vpc" "main_vpc"{
 }
 
 resource "aws_subnet" "subnet_a"{
-  vpc_id            = aws_vpc.main_vpc.id
+  vpc_id            = aws_vpc.gokul_vpc.id
   cidr_block        = "10.0.1.1/24"
   availability_zone = "us-west-2a"
   map_public_ip_on_launch = true
@@ -22,7 +22,7 @@ resource "aws_subnet" "subnet_a"{
 }
 
 resource "aws_subnet" "subnet_b" {
-  vpc_id            = aws_vpc.main_vpc.id
+  vpc_id            = aws_vpc.gokul_vpc.id
   cidr_block        = "10.0.2.0/24"
   availability_zone = "us-west-2b"
   map_public-ip_on_launch = true
@@ -32,11 +32,11 @@ resource "aws_subnet" "subnet_b" {
 }
 
 resource "aws_internet_gateway" "igw"
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.gokul_vpc.id
 }
 
 resource "aws_route_table" "route_table"
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.gokul_vpc.id
 }
 
 resource "aws_route" "internet_route" {
@@ -46,7 +46,7 @@ resource "aws_route" "internet_route" {
 }
 
 resource "aws_security_group" "allow_http" {
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.gokul_vpc.id
 
   egress {
     cidr_blocks = ["0.0.0.0/0"]
@@ -68,7 +68,7 @@ resource "aws_security_group" "allow_http" {
 }
 
 resource "aws_security_group" "allow_https" {
-  vpc_id = aws_vpc.main_vpc.id
+  vpc_id = aws_vpc.gokul_vpc.id
 
    egress {
     cidr_blocks = ["0.0.0.0/0"]
