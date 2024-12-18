@@ -25,7 +25,7 @@ resource "aws_subnet" "subnet_b" {
   vpc_id            = aws_vpc.gokul_vpc.id
   cidr_block        = "10.0.2.0/24"
   availability_zone = "us-west-2b"
-  map_public-ip_on_launch = true
+  map_public_ip_on_launch = true
   tags = {
     Name = "subnet_b"
   }
@@ -42,7 +42,7 @@ resource "aws_route_table" "route_table"{
 resource "aws_route" "internet_route" {
   route_table_id         = aws_route_table.route_table.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_internet_gatway.igw.id
+  gateway_id             = aws_internet_gateway.igw.id
 }
 
 resource "aws_security_group" "allow_http" {
