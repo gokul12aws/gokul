@@ -1,0 +1,76 @@
+name: Dynamic Environment Deployment
+
+on:
+
+push:
+
+branches:
+
+- main
+
+- develop
+
+jobs:
+
+deploy:
+
+runs-on: ubuntu-latest
+
+
+steps:
+
+- name: Check out the repository
+
+ uses: actions/checkout@v3
+
+
+  - name: Set Environment Variables
+
+id: set-env-vars
+
+run: |
+
+if [ "${{ github.ref_name }}" == "main" ]; then
+
+echo "ENVIRONMENT=Production" >> $GITHUB_ENV
+
+echo "API_URL=https://api.example.com" >> $GITHUB_ENV
+
+echo "MESSAGE=Deploying to Production" >> $GITHUB_ENV
+
+elif [ "${{ github.ref_name }}" == "develop" ]; then
+
+echo "ENVIRONMENT=Staging" >> $GITHUB_ENV
+
+echo "API_URL=https://staging-api.example.com" >> $GITHUB_ENV
+
+echo "MESSAGE=Deploying to Staging" >> $GITHUB_ENV
+
+fi
+
+shell: bash
+
+
+- name: Print Deployment Details
+
+run: |
+
+echo "Environment: $ENVIRONMENT"
+
+echo "API URL: $API_URL"
+
+echo "Message: $MESSAGE"
+
+
+- name: Set Version
+
+run: echo "VERSION=v1.2.0" >> $GITHUB_ENV
+
+
+- name: Confirm Deployment
+
+run: |
+
+echo "$MESSAGE"
+
+echo "Version: $VERSION"
