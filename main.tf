@@ -95,7 +95,7 @@ resource "aws_security_group" "web_security_group"{
   }
 }
 
-resource "aws_instance" "web_server" {
+resource "aws_instance" "server" {
   ami = "ami-001f2488b35ca8aad"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.private_subnet.id
