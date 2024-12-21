@@ -40,7 +40,7 @@ resource "aws_nat_gateway" "main"{
 }
 
 resource "aws_route_table" "public"{
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.igw.id
 }
 
 resource "aws_route" "public_route" {
