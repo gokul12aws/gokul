@@ -40,7 +40,7 @@ resource "aws_nat_gateway" "main"{
 }
 
 resource "aws_route_table" "public"{
-  vpc_id = aws_vpc.igw.id
+  vpc_id = aws_vpc.main.id
 }
 
 resource "aws_route" "public_route" {
@@ -95,10 +95,10 @@ resource "aws_security_group" "web_security_group"{
   }
 }
 
-resource "aws_instance" "server" {
-  ami = "ami-001f2488b35ca8aad"
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.private_subnet.id
+resource "aws_instance" "web_server" {
+  ami                  = "ami-001f2488b35ca8aad"
+  instance_type        = "t2.micro"
+  subnet_id            = aws_subnet.private_subnet.id
   associate_public_ip_address = false
 
   user_data = <<-EOF
@@ -110,7 +110,7 @@ resource "aws_instance" "server" {
               EOF
 
 tags = {
-  Name ="server"
+  Name ="web_server"
 }
 }
 
