@@ -27,7 +27,7 @@ resource "aws_subnet" "private_subnet" {
 }
 
 resource "aws_internet_gateway" "igw"{
-  vpc_id = aws_vpc.gokul_vpc.id
+  vpc_id = aws_vpc.main.id
 }
 
 resource "aws_eip" "main"{
@@ -40,7 +40,7 @@ resource "aws_nat_gateway" "main"{
 }
 
 resource "aws_route_table" "public"{
-  vpc_id = aws_vpc.gokul_vpc.id
+  vpc_id = aws_vpc.main.id
 }
 
 resource "aws_route" "internet_route" {
