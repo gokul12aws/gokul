@@ -1,7 +1,7 @@
 name: terraform Deployment
 
 on: 
- workflow_dispatch:
+ workflow_dispatch: 
  
 permissions:  
   id-token: write
