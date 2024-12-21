@@ -3,7 +3,7 @@ name: terraform Deployment
 on: 
  workflow_dispatch: 
  
-permissions:  
+permissions:   
   id-token: write
   contents: read
    
