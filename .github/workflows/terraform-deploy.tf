@@ -24,7 +24,7 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_ACCESS_KEY_ID }}
      
-
+ 
 
     - name: Terraform Init
       run: terraform init
