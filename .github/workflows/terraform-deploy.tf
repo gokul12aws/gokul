@@ -8,14 +8,14 @@ jobs:
     runs-on: ubuntu-latest 
 
     steps:
-    - name: checkout code
+    - name: checkout repository
       uses: actions/checkout@v4
 
     
     - name: set up terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: "1.4.0" 
+        terraform_version: 1.4.0
         
     - name: aws credentials
       uses: aws-actions/configure-aws-credentials@v4
