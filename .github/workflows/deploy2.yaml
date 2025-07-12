@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-latest 
 
     steps:
-    - name: checkout code
-      uses: actions/checkout@v4
+    - name: checkout repository
+      uses: actions/checkout@v2
 
     
     - name: set up terraform
