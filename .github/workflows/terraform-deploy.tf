@@ -12,7 +12,7 @@ jobs:
       uses: actions/checkout@v2
 
    
-    - name: set up terraform
+    - name: set up terraform  
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: "1.4.0" 
