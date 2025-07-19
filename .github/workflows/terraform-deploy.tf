@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - name: checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2 
 
    
     - name: set up terraform  
