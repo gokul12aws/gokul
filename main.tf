@@ -11,8 +11,8 @@ resource "aws_vpc" "gokul_vpc"{
   }
 }
 
-resource "aws_subnet" "subnet_a"{
-  Vpc_id            = aws_vpc.gokul_vpc.id
+resource "aws_subnet" "subnet_pri"{
+  vpc_id            = aws_vpc.gokul_vpc.id
   cidr_block        = "10.0.1.0/24"
   availability_zone = "us-east-1a"
   map_public_ip_on_launch = true
@@ -21,8 +21,8 @@ resource "aws_subnet" "subnet_a"{
   }
 }
 
-resource "aws_subnet" "subnet_b" {
-  Vpc_id            = aws_vpc.gokul_vpc.id
+resource "aws_subnet" "subnet_pub" {
+  vpc_id            = aws_vpc.gokul_vpc.id
   cidr_block        = "10.0.2.0/24"
   availability_zone = "us-east-1b"
   map_public_ip_on_launch = true
@@ -42,7 +42,7 @@ resource "aws_route_table" "route_table"{
 resource "aws_route" "internet_route" {
   route_table_id          = aws_route_table.route_table.id
   destination_cidr_block  = "0.0.0.0/0"
-  gateway_id              = aws_internet_gateway_igw.id
+  gateway_id              = aws_internet_gateway.igw.id
 }
 
 resource "aws_security_group" "allow_http"{
