@@ -46,7 +46,7 @@ resource "aws_route" "internet_route" {
 }
 
 resource "aws_security_group" "allow_http"{
-  vpc.id = aws_vpc.gokul_vpc.id
+  vpc_id = aws_vpc.gokul_vpc.id
 
   egress {
     cidr_blocks = ["0.0.0.0/0"]
@@ -68,7 +68,7 @@ resource "aws_security_group" "allow_http"{
 }
 
 resource "aws_security_group" "allow_https"{
-  vpc.id = aws_vpc.gokul_vpc.id
+  vpc_id = aws_vpc.gokul_vpc.id
 
   egress {
     cidr_blocks = ["0.0.0.0/0"]
