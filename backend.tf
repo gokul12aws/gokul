@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket = "gokul"
+    bucket = "gokul34567"
     key = "terraform/state/terraform.tf"
-    region = "us-west-1"
+    region = "us-east-1"
   }
 }
