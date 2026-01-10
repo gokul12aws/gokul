@@ -10,8 +10,9 @@ resource "aws_instance" "instance_gokul" {
     aws_security_group.allow_https.id
   ]
 
+  key_name = "gokul-key"
+
   tags = {
     Name = "Helloworld-${count.index + 1}"
   }
 }
-
