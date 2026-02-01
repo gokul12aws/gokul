@@ -22,7 +22,7 @@ module "vpc" {
   name = "${var.cluster_name}-vpc"
   cidr = var.vpc_cidr
 
-  azs             = ["ap-south-1", "ap-south-2"]
+  azs             = ["ap-south-1a", "ap-south-1b"]
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24"]
 
@@ -52,6 +52,32 @@ module "eks" {
 
   enable_irsa = true
 
+  # -----------------------------
+  # Control Plane Security Group Rules
+  # -----------------------------
+  cluster_security_group_additional_rules = {
+    ingress_api_server = {
+      description = "Allow worker nodes to talk to EKS API server"
+      protocol    = "tcp"
+      from_port   = 443
+      to_port     = 443
+      type        = "ingress"
+      cidr_blocks = [var.vpc_cidr]
+    }
+
+    egress_all = {
+      description = "Allow all outbound traffic"
+      protocol    = "-1"
+      from_port   = 0
+      to_port     = 0
+      type        = "egress"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+
+  # -----------------------------
+  # Worker Node Groups (EC2)
+  # -----------------------------
   eks_managed_node_groups = {
     default = {
       desired_size = 2
@@ -59,6 +85,56 @@ module "eks" {
       max_size     = 3
 
       instance_types = ["t3.medium"]
+
+      # -----------------------------
+      # Node Security Group Rules
+      # -----------------------------
+      security_group_additional_rules = {
+        ingress_cluster = {
+          description = "Allow cluster control plane to reach nodes"
+          protocol    = "tcp"
+          from_port   = 1025
+          to_port     = 65535
+          type        = "ingress"
+          cidr_blocks = [var.vpc_cidr]
+        }
+
+        ingress_node_to_node = {
+          description = "Allow node-to-node communication"
+          protocol    = "-1"
+          from_port   = 0
+          to_port     = 0
+          type        = "ingress"
+          cidr_blocks = [var.vpc_cidr]
+        }
+
+        ingress_http = {
+          description = "Allow HTTP traffic (Ingress / LoadBalancer)"
+          protocol    = "tcp"
+          from_port   = 80
+          to_port     = 80
+          type        = "ingress"
+          cidr_blocks = ["0.0.0.0/0"]
+        }
+
+        ingress_https = {
+          description = "Allow HTTPS traffic"
+          protocol    = "tcp"
+          from_port   = 443
+          to_port     = 443
+          type        = "ingress"
+          cidr_blocks = ["0.0.0.0/0"]
+        }
+
+        egress_all = {
+          description = "Allow all outbound traffic"
+          protocol    = "-1"
+          from_port   = 0
+          to_port     = 0
+          type        = "egress"
+          cidr_blocks = ["0.0.0.0/0"]
+        }
+      }
     }
   }
 
