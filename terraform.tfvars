@@ -1,3 +1,3 @@
-aws_region   = "us-east-1"
+aws_region   = "ap-south-1"
 cluster_name = "real-time-eks"
 environment  = "dev"
