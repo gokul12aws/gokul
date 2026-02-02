@@ -24,7 +24,13 @@ jobs:
           terraform_version: "1.4.0"
 
       - name: Terraform init
-        run: terraform init    
+        run: terraform init -reconfigure
+
+      - name: Terraform Force Unlock (if needed)
+        if: ${{ github.event.inputs.action == 'apply' }}
+        run: |
+          echo "Skipping force-unlock by default"
+          # terraform force-unlock <LOCK_ID>  
 
       - name: Terraform apply
         run: terraform apply -auto-approve  
